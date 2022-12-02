@@ -138,14 +138,14 @@ public class UtMM {
      * pré-requis : aucun
      * résultat : un tableau de lgCode entiers choisis aléatoirement entre 0 et nbCouleurs-1
      */
-    public static int[] codeAleat(int lgCode, int nbCouleurs) {
+    public static Code codeAleat(int lgCode, int nbCouleurs) {
 
-        int[] tab = new int[lgCode];
+        Code tab = new Code(lgCode);
 
         for (int i = 0; i < lgCode; i++) {
             Random rn = new Random();
             int r = rn.nextInt(nbCouleurs);
-            tab[i] = r;
+            tab.setCode(i,r);
         }
 
         return tab;
@@ -184,13 +184,13 @@ public class UtMM {
      * prérequis : les caractères de codMot sont des éléments de tabCouleurs
      * résultat : le code codMot sous forme de tableau d'entiers en remplaçant chaque couleur par son indice dans tabCouleurs
      */
-    public static int[] motVersEntiers(String codMot, char[] tabCouleurs) {
+    public static Code motVersEntiers(String codMot, char[] tabCouleurs) {
 
-        int[] tab = new int[codMot.length()];
+        Code tab = new Code(codMot.length());
 
         // on cherche l'indice grâce à la 3° fonction plusGrandIndice et on la met dans le tableau final
         for (int i = 0; i < codMot.length(); i++) {
-            tab[i] = plusGrandIndice(tabCouleurs, codMot.charAt(i));
+            tab.setCode(i,plusGrandIndice(tabCouleurs, codMot.charAt(i)));
         }
 
         return tab;
@@ -205,9 +205,9 @@ public class UtMM {
      * qu'elle soit correcte (le paramètre nbCoups ne sert que pour l'affichage)
      * résultat : le code saisi sous forme de tableau d'entiers
      */
-    public static int[] propositionCodeHumain(int nbCoups, int lgCode, char[] tabCouleurs) {
+    public static Code propositionCodeHumain(int nbCoups, int lgCode, char[] tabCouleurs) {
 
-        // on demande la saisie
+        // on demande la saisie*
         System.out.println("\n------------------------------\n");
         System.out.println("Vous êtes a l'essai n° "+nbCoups);
         System.out.println("\n------------------------------\n");
@@ -227,6 +227,7 @@ public class UtMM {
 
 
         }
+
         //on retourne le code sous forme de tableau d'entier (grâce à la fonction motVersEntiers
         return motVersEntiers(demande, tabCouleurs);
 
@@ -239,12 +240,12 @@ public class UtMM {
      * résultat : le nombre d'éléments communs de cod1 et cod2 se trouvant au même indice
      * Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne 1 (le "0" à l'indice 3)
      */
-    public static int nbBienPlaces(int[] cod1, int[] cod2) {
+    public static int nbBienPlaces(Code cod1, Code cod2) {
 
         int compteur = 0;
 
-        for (int i = 0; i < cod1.length; i++) {
-            if (cod1[i] == cod2[i]) {
+        for (int i = 0; i < cod1.getLgCode(); i++) {
+            if (cod1.getCode(i) == cod2.getCode(i)) {
                 compteur++;
             }
 
@@ -261,13 +262,13 @@ public class UtMM {
      * résultat : un tableau de longueur nbCouleurs contenant à chaque indice i le nombre d'occurrences de "i" dans cod
      * Par exemple, si cod = (1,0,2,0) et nbCouleurs = 6 la fonction retourne (2,1,1,0,0,0)
      */
-    public static int[] tabFrequence(int[] cod, int nbCouleurs) {
+    public static Code tabFrequence(Code cod, int nbCouleurs) {
 
-        int[] freq = new int[nbCouleurs];
+        Code freq = new Code(nbCouleurs);
 
         // pour chaque valeur de cod, on prend cette valeur qui correspond donc à l'indice du tableau freq et on ajoute 1
-        for(int i = 0; i < cod.length; i++) {
-            freq[cod[i]]++;
+        for(int i = 0; i < cod.getLgCode(); i++) {
+            freq.setCode(cod.getCode(i),freq.getCode(i)+1);
         }
         return freq;
     }
@@ -279,15 +280,15 @@ public class UtMM {
      * résultat : le nombre d'éléments communs de cod1 et cod2, indépendamment de leur position
      * Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne 3 (2 "0" et 1 "1")
      */
-    public static int nbCommuns(int[] cod1, int[] cod2, int nbCouleurs) {
-        int[] freqCod1 = tabFrequence(cod1, nbCouleurs);
-        int[] freqCod2 = tabFrequence(cod2, nbCouleurs);
+    public static int nbCommuns(Code cod1, Code cod2, int nbCouleurs) {
+        Code freqCod1 = tabFrequence(cod1, nbCouleurs);
+        Code freqCod2 = tabFrequence(cod2, nbCouleurs);
         int nbCommuns = 0;
         for (int i = 0; i < nbCouleurs; i++) {
-            if (freqCod1[i] < freqCod2[i]) {
-                nbCommuns += freqCod1[i];
+            if (freqCod1.getCode(i) < freqCod2.getCode(i)) {
+                nbCommuns += freqCod1.getCode(i);
             } else {
-                nbCommuns += freqCod2[i];
+                nbCommuns += freqCod2.getCode(i);
             }
         }
         return nbCommuns - nbBienPlaces(cod1, cod2);
@@ -302,10 +303,13 @@ public class UtMM {
      * Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne (1,2) : 1 bien placé (le "0" à l'indice 3)
      * et 2 mal placés (1 "0" et 1 "1")
      */
-    public static int[] nbBienMalPlaces(int[] cod1, int[] cod2, int nbCouleurs) {
+    public static Code nbBienMalPlaces(Code cod1,Code cod2, int nbCouleurs) {
         int nbBienPlaces = nbBienPlaces(cod1, cod2);
         int nbCommuns = nbCommuns(cod1, cod2, nbCouleurs);
-        return new int[]{nbBienPlaces, nbCommuns};
+        Code nbBienMalPlace= new Code(2);
+        nbBienMalPlace.setCode(0,nbBienPlaces);
+        nbBienMalPlace.setCode(1,nbCommuns);
+        return nbBienMalPlace;
     }
 
 
@@ -320,10 +324,10 @@ public class UtMM {
      * pré-requis : les éléments de cod sont des entiers de 0 à tabCouleurs.length-1
      * résultat : le code cod sous forme de mot d'après le tableau tabCouleurs
      */
-    public static String entiersVersMot(int[] cod, char[] tabCouleurs) {
+    public static String entiersVersMot(Code cod, char[] tabCouleurs) {
         String codMot = "";
-        for (int i = 0; i < cod.length; i++) {
-            codMot += tabCouleurs[cod[i]];
+        for (int i = 0; i < cod.getLgCode(); i++) {
+            codMot += tabCouleurs[cod.getCode(i)];
         }
         return codMot;
     }

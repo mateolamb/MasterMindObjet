@@ -34,7 +34,7 @@ public class MainMasterMind {
         int score_joueur = 0;
         int score_ordi = 0;
 
-        Partie LaPartie = new Partie();
+        Partie LaPartie = new Partie(2);
 
 
 
