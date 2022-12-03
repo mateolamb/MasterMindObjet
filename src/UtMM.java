@@ -19,11 +19,11 @@ public class UtMM {
      * pré-requis : aucun
      * résultat : une copie de tab
      */
-    public static int[] copieTab(int[] tab) {
+    public static Code copieTab(Code tab) {
 
-        int[] tab2 = new int[tab.length];
-        for (int i = 0; i < tab.length; i++) {
-            tab2[i] = tab[i];
+        Code tab2 = new Code(tab.getLgCode());
+        for (int i = 0; i < tab.getLgCode(); i++) {
+            tab2.setCode(i,tab.getCode(i));
         }
 
         return tab2;
@@ -303,13 +303,10 @@ public class UtMM {
      * Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne (1,2) : 1 bien placé (le "0" à l'indice 3)
      * et 2 mal placés (1 "0" et 1 "1")
      */
-    public static Code nbBienMalPlaces(Code cod1,Code cod2, int nbCouleurs) {
+    public static int[] nbBienMalPlaces(Code cod1,Code cod2, int nbCouleurs) {
         int nbBienPlaces = nbBienPlaces(cod1, cod2);
         int nbCommuns = nbCommuns(cod1, cod2, nbCouleurs);
-        Code nbBienMalPlace= new Code(2);
-        nbBienMalPlace.setCode(0,nbBienPlaces);
-        nbBienMalPlace.setCode(1,nbCommuns);
-        return nbBienMalPlace;
+        return new int[]{nbBienPlaces,nbCommuns};
     }
 
 
@@ -397,23 +394,23 @@ public class UtMM {
      des codes à valeurs  de 0 à nbCouleurs-1) et retourne vrai si ce code existe,
      sinon met dans cod1 le code ne contenant que des "0" et retourne faux
      */
-    public static boolean passeCodeSuivantLexico(int[] cod1, int nbCouleurs) {
+    public static boolean passeCodeSuivantLexico(Code cod1, int nbCouleurs) {
 
-        for (int i = cod1.length - 1; i >= 0; i--) {
-            if (cod1[i] < nbCouleurs - 1) {
-                cod1[i]++;
+        for (int i = cod1.getLgCode() - 1; i >= 0; i--) {
+            if (cod1.getCode(i) < nbCouleurs - 1) {
+                cod1.setCode(i,cod1.getCode(i)+1);
                 return true;
-            } else if (cod1[i] == nbCouleurs - 1) {
-                cod1[i] = 0;
+            } else if (cod1.getCode(i) == nbCouleurs - 1) {
+                cod1.setCode(i,0);
             } else {
-                for (int j = 0; j < cod1.length; j++) {
-                    cod1[j]=0;
+                for (int j = 0; j < cod1.getLgCode(); j++) {
+                    cod1.setCode(j,0);
                 }
                 return false;
             }
         }
-        for (int j = 0; j < cod1.length; j++) {
-            cod1[j]=0;
+        for (int j = 0; j < cod1.getLgCode(); j++) {
+            cod1.setCode(j,0);
         }
         return false;
     }
@@ -429,7 +426,7 @@ public class UtMM {
      propositions de cod seraient les nbCoups premières réponses de rep resp.
      */
 
-    public static boolean estCompat(int [] cod1, int [][] cod,int [][] rep, int nbCoups, int  nbCouleurs){
+    public static boolean estCompat(Code cod1, Code[] cod,int [][] rep, int nbCoups, int  nbCouleurs){
 
         for (int i = 0; i < nbCoups; i++) {
 
@@ -454,7 +451,7 @@ public class UtMM {
      cod1 selon cet ordre et compatible avec les nbCoups premières lignes de cod et rep si ce code existe,
      sinon met dans cod1 le code ne contenant que des "0" et retourne faux
      */
-    public static boolean passeCodeSuivantLexicoCompat(int [] cod1, int [][] cod,int [][] rep, int nbCoups, int  nbCouleurs){
+    public static boolean passeCodeSuivantLexicoCompat(Code cod1, Code[] cod,int [][] rep, int nbCoups, int  nbCouleurs){
         cod[nbCoups] = copieTab(cod[nbCoups - 1]);
 
         while (passeCodeSuivantLexico(cod[nbCoups], nbCouleurs)) {

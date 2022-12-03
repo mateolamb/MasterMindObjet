@@ -6,32 +6,30 @@ public class MancheHumain {
         p=new Plateau(nbEssaisMax);
     }
 
-    public int partie(int lgCode){
+    public int joue(int lgCode){
         Code cod1 = UtMM.codeAleat(lgCode, Couleur.getTaille());
-        Code cod2;
-        Code nbBienMal = new Code(2);
         for (int i = 1; i <= Plateau.getNbEssaisMax(); i++) {
             System.out.println("\n------------------------------\n");
             System.out.println("Vous pouvez choisir entre ses couleurs : " +Couleur.pourEcrire());
-            cod2 = UtMM.propositionCodeHumain(i, lgCode, Couleur.getTabCouleurs());
-            if (UtMM.nbBienMalPlaces(cod1, cod2, Couleur.getTaille()).getCode(0) == lgCode) {
+            p.setCod(i,UtMM.propositionCodeHumain(i, lgCode, Couleur.getTabCouleurs()));
+            if (UtMM.nbBienMalPlaces(cod1, p.getCod(i), Couleur.getTaille())[0]== lgCode) {
                 System.out.println("\n------------------------------\n");
                 System.out.println("!!! vous avez trouvé le code !!!");
                 System.out.println("\n------------------------------\n");
 
                 return i;
             } else {
-                nbBienMal = UtMM.nbBienMalPlaces(cod1, cod2,Couleur.getTaille());
+                p.setRep(i,UtMM.nbBienMalPlaces(cod1, p.getCod(i),Couleur.getTaille()));
 
                 System.out.println("Voici le code que vous avez rentré.");
-                System.out.println(UtMM.entiersVersMot(cod2, Couleur.getTabCouleurs()));
+                System.out.println(UtMM.entiersVersMot(p.getCod(i), Couleur.getTabCouleurs()));
                 System.out.println("\n------------------------------\n");
-                System.out.println("vous avez " + nbBienMal.getCode(0) + " pion(s) bien placé(s).");
-                System.out.println("Vous avez " + nbBienMal.getCode(1) + " pion(s) mal placé(s) :");
+                System.out.println("vous avez " + p.getRep(i)[0] + " pion(s) bien placé(s).");
+                System.out.println("Vous avez " + p.getRep(i)[1] + " pion(s) mal placé(s) :");
                 System.out.println("\n------------------------------\n");
 
             }
         }
-        return nbBienMal.getCode(1) + 2 * (lgCode - (nbBienMal.getCode(0) + nbBienMal.getCode(1)));
+        return p.getRep(lgCode-1)[1] + 2 * (lgCode - (p.getRep(lgCode-1)[0] + p.getRep(lgCode-1)[1]));
     }
 }

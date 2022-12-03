@@ -6,7 +6,7 @@ public class Plateau {
     private int nbCoups;
 
     public Plateau(int nbEssaisMax){
-        this.nbEssaisMax=nbEssaisMax;
+        Plateau.nbEssaisMax =nbEssaisMax;
         cod = new Code[nbEssaisMax];
         rep= new int[nbEssaisMax][2];
         nbCoups=0;
@@ -26,6 +26,14 @@ public class Plateau {
 
     public Code getCod(int i) {
         return cod[i];
+    }
+
+    public Code[] getCod() {
+        return cod;
+    }
+
+    public int[][] getRep() {
+        return rep;
     }
 
     public int getNbCoups() {
