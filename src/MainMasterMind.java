@@ -13,7 +13,6 @@ public class MainMasterMind {
         System.out.println("\n\n\n------------------------------\n\nBienvenue sur notre MasterMind\n\n------------------------------\n\n\n  ");
 
 
-
         System.out.println("Veuillez choisir la longueur du code à trouver, ");
         int lgCode = UtMM.saisirEntierPositif();
         System.out.println("\n------------------------------\n");
@@ -30,16 +29,13 @@ public class MainMasterMind {
 
         // on demande tabCouleurs
         char[] tabCouleurs = UtMM.saisirCouleurs();
+        Couleur.rentrerCouleurs(tabCouleurs);
 
-        int score_joueur = 0;
-        int score_ordi = 0;
+        Partie LaPartie = new Partie(numManche);
 
-        Partie LaPartie = new Partie(2);
-
-
+        LaPartie.joue(nbEssaisMax, lgCode);
 
     }
-
 
 
 }

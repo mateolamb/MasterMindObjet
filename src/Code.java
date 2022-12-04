@@ -2,11 +2,10 @@ public class Code {
 
     private int[] code;
     private int lgCode;
-    public Code(int lgCode){
-        this.lgCode=lgCode;
-        for (int i = 0; i < lgCode; i++) {
-            code[i]=0;
-        }
+
+    public Code(int lgCode) {
+        this.lgCode = lgCode;
+        code = new int[lgCode];
     }
 
     public void setCode(int i, int valeur) {
@@ -15,7 +14,7 @@ public class Code {
     }
 
 
-    public int getLgCode(){
+    public int getLgCode() {
         return this.lgCode;
     }
 

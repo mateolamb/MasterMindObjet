@@ -5,22 +5,25 @@ public class Plateau {
     private int[][] rep;
     private int nbCoups;
 
-    public Plateau(int nbEssaisMax){
-        Plateau.nbEssaisMax =nbEssaisMax;
+    public Plateau(int nbEssaisMax, int lgCode) {
+        Plateau.nbEssaisMax = nbEssaisMax;
         cod = new Code[nbEssaisMax];
-        rep= new int[nbEssaisMax][2];
-        nbCoups=0;
+        for (int i = 0; i < nbEssaisMax; i++) {
+            cod[i] = new Code(lgCode);
+        }
+        rep = new int[nbEssaisMax][2];
+        nbCoups = 0;
     }
 
     public void setNbCoups(int nbCoups) {
         this.nbCoups = nbCoups;
     }
 
-    public void setCod(int nbCoups,Code cod1) {
+    public void setCod(int nbCoups, Code cod1) {
         this.cod[nbCoups] = cod1;
     }
 
-    public void setRep(int nbCoups,int[] rep) {
+    public void setRep(int nbCoups, int[] rep) {
         this.rep[nbCoups] = rep;
     }
 

@@ -1,8 +1,12 @@
 public class Couleur {
-    
+
     private static char[] tabCouleurs;
 
-    public static char getCouleur(int i){
+    public static void rentrerCouleurs(char[] tab) {
+        tabCouleurs = tab;
+    }
+
+    public static char getCouleur(int i) {
         return tabCouleurs[i];
     }
 
@@ -10,11 +14,11 @@ public class Couleur {
         return tabCouleurs;
     }
 
-    public static int getTaille(){
+    public static int getTaille() {
         return tabCouleurs.length;
     }
 
-    public static String pourEcrire(){
+    public static String pourEcrire() {
         String str = "";
 
         str += "(" + tabCouleurs[0];

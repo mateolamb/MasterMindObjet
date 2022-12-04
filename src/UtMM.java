@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class UtMM {
 
 
@@ -23,7 +24,7 @@ public class UtMM {
 
         Code tab2 = new Code(tab.getLgCode());
         for (int i = 0; i < tab.getLgCode(); i++) {
-            tab2.setCode(i,tab.getCode(i));
+            tab2.setCode(i, tab.getCode(i));
         }
 
         return tab2;
@@ -145,7 +146,7 @@ public class UtMM {
         for (int i = 0; i < lgCode; i++) {
             Random rn = new Random();
             int r = rn.nextInt(nbCouleurs);
-            tab.setCode(i,r);
+            tab.setCode(i, r);
         }
 
         return tab;
@@ -190,7 +191,7 @@ public class UtMM {
 
         // on cherche l'indice grâce à la 3° fonction plusGrandIndice et on la met dans le tableau final
         for (int i = 0; i < codMot.length(); i++) {
-            tab.setCode(i,plusGrandIndice(tabCouleurs, codMot.charAt(i)));
+            tab.setCode(i, plusGrandIndice(tabCouleurs, codMot.charAt(i)));
         }
 
         return tab;
@@ -209,7 +210,7 @@ public class UtMM {
 
         // on demande la saisie*
         System.out.println("\n------------------------------\n");
-        System.out.println("Vous êtes a l'essai n° "+nbCoups);
+        System.out.println("Vous êtes a l'essai n° " + nbCoups);
         System.out.println("\n------------------------------\n");
         System.out.println("Veuillez saisir votre Code couleur : ");
         Scanner myObj4 = new Scanner(System.in);
@@ -267,8 +268,8 @@ public class UtMM {
         Code freq = new Code(nbCouleurs);
 
         // pour chaque valeur de cod, on prend cette valeur qui correspond donc à l'indice du tableau freq et on ajoute 1
-        for(int i = 0; i < cod.getLgCode(); i++) {
-            freq.setCode(cod.getCode(i),freq.getCode(i)+1);
+        for (int i = 0; i < cod.getLgCode(); i++) {
+            freq.setCode(cod.getCode(i), freq.getCode(cod.getCode(i)) + 1);
         }
         return freq;
     }
@@ -303,12 +304,11 @@ public class UtMM {
      * Par exemple, si cod1 = (1,0,2,0) et cod2 = (0,1,0,0) la fonction retourne (1,2) : 1 bien placé (le "0" à l'indice 3)
      * et 2 mal placés (1 "0" et 1 "1")
      */
-    public static int[] nbBienMalPlaces(Code cod1,Code cod2, int nbCouleurs) {
+    public static int[] nbBienMalPlaces(Code cod1, Code cod2, int nbCouleurs) {
         int nbBienPlaces = nbBienPlaces(cod1, cod2);
         int nbCommuns = nbCommuns(cod1, cod2, nbCouleurs);
-        return new int[]{nbBienPlaces,nbCommuns};
+        return new int[]{nbBienPlaces, nbCommuns};
     }
-
 
 
     //____________________________________________________________
@@ -387,46 +387,48 @@ public class UtMM {
 
     //___________________________________________________________________
 
-    /**CHANGE : action si le code suivant n'existe pas
-     *************************************************
-     pré-requis : les éléments de cod1 sont des entiers de 0 à nbCouleurs-1
-     action/résultat : met dans cod1 le code qui le suit selon l'ordre lexicographique (dans l'ensemble
-     des codes à valeurs  de 0 à nbCouleurs-1) et retourne vrai si ce code existe,
-     sinon met dans cod1 le code ne contenant que des "0" et retourne faux
+    /**
+     * CHANGE : action si le code suivant n'existe pas
+     * ************************************************
+     * pré-requis : les éléments de cod1 sont des entiers de 0 à nbCouleurs-1
+     * action/résultat : met dans cod1 le code qui le suit selon l'ordre lexicographique (dans l'ensemble
+     * des codes à valeurs  de 0 à nbCouleurs-1) et retourne vrai si ce code existe,
+     * sinon met dans cod1 le code ne contenant que des "0" et retourne faux
      */
     public static boolean passeCodeSuivantLexico(Code cod1, int nbCouleurs) {
 
         for (int i = cod1.getLgCode() - 1; i >= 0; i--) {
             if (cod1.getCode(i) < nbCouleurs - 1) {
-                cod1.setCode(i,cod1.getCode(i)+1);
+                cod1.setCode(i, cod1.getCode(i) + 1);
                 return true;
             } else if (cod1.getCode(i) == nbCouleurs - 1) {
-                cod1.setCode(i,0);
+                cod1.setCode(i, 0);
             } else {
                 for (int j = 0; j < cod1.getLgCode(); j++) {
-                    cod1.setCode(j,0);
+                    cod1.setCode(j, 0);
                 }
                 return false;
             }
         }
         for (int j = 0; j < cod1.getLgCode(); j++) {
-            cod1.setCode(j,0);
+            cod1.setCode(j, 0);
         }
         return false;
     }
 
     //___________________________________________________________________
 
-    /**CHANGE : ajout du paramètre cod1 et modification des spécifications
-     *********************************************************************
-     pré-requis : cod est une matrice à cod1.length colonnes, rep est une matrice à 2 colonnes, 0 <= nbCoups < cod.length,
-     nbCoups < rep.length et les éléments de cod1 et de cod sont des entiers de 0 à nbCouleurs-1
-     résultat : vrai ssi cod1 est compatible avec les nbCoups premières lignes de cod et de rep,
-     c'est-à-dire que si cod1 était le code secret, les réponses aux nbCoups premières
-     propositions de cod seraient les nbCoups premières réponses de rep resp.
+    /**
+     * CHANGE : ajout du paramètre cod1 et modification des spécifications
+     * ********************************************************************
+     * pré-requis : cod est une matrice à cod1.length colonnes, rep est une matrice à 2 colonnes, 0 <= nbCoups < cod.length,
+     * nbCoups < rep.length et les éléments de cod1 et de cod sont des entiers de 0 à nbCouleurs-1
+     * résultat : vrai ssi cod1 est compatible avec les nbCoups premières lignes de cod et de rep,
+     * c'est-à-dire que si cod1 était le code secret, les réponses aux nbCoups premières
+     * propositions de cod seraient les nbCoups premières réponses de rep resp.
      */
 
-    public static boolean estCompat(Code cod1, Code[] cod,int [][] rep, int nbCoups, int  nbCouleurs){
+    public static boolean estCompat(Code cod1, Code[] cod, int[][] rep, int nbCoups, int nbCouleurs) {
 
         for (int i = 0; i < nbCoups; i++) {
 
@@ -441,20 +443,20 @@ public class UtMM {
 
     //___________________________________________________________________
 
-    /**CHANGE : renommage de passePropSuivante en passeCodeSuivantLexicoCompat,
-     ajout du paramètre cod1 et modification des spécifications
-     **************************************************************************
-     pré-requis : cod est une matrice à cod1.length colonnes, rep est une matrice à 2 colonnes, 0 <= nbCoups < cod.length,
-     nbCoups < rep.length et les éléments de cod1 et de cod sont des entiers de 0 à nbCouleurs-1
-     action/résultat : met dans cod1 le plus petit code (selon l'ordre lexicographique (dans l'ensemble
-     des codes à valeurs  de 0 à nbCouleurs-1) qui est à la fois plus grand que
-     cod1 selon cet ordre et compatible avec les nbCoups premières lignes de cod et rep si ce code existe,
-     sinon met dans cod1 le code ne contenant que des "0" et retourne faux
+    /**
+     * CHANGE : renommage de passePropSuivante en passeCodeSuivantLexicoCompat,
+     * ajout du paramètre cod1 et modification des spécifications
+     * *************************************************************************
+     * pré-requis : cod est une matrice à cod1.length colonnes, rep est une matrice à 2 colonnes, 0 <= nbCoups < cod.length,
+     * nbCoups < rep.length et les éléments de cod1 et de cod sont des entiers de 0 à nbCouleurs-1
+     * action/résultat : met dans cod1 le plus petit code (selon l'ordre lexicographique (dans l'ensemble
+     * des codes à valeurs  de 0 à nbCouleurs-1) qui est à la fois plus grand que
+     * cod1 selon cet ordre et compatible avec les nbCoups premières lignes de cod et rep si ce code existe,
+     * sinon met dans cod1 le code ne contenant que des "0" et retourne faux
      */
-    public static boolean passeCodeSuivantLexicoCompat(Code cod1, Code[] cod,int [][] rep, int nbCoups, int  nbCouleurs){
-        cod[nbCoups] = copieTab(cod[nbCoups - 1]);
+    public static boolean passeCodeSuivantLexicoCompat(Code cod1, Code[] cod, int[][] rep, int nbCoups, int nbCouleurs) {
 
-        while (passeCodeSuivantLexico(cod[nbCoups], nbCouleurs)) {
+        while (passeCodeSuivantLexico(cod1, nbCouleurs)) {
             if (estCompat(cod1, cod, rep, nbCoups, nbCouleurs)) {
                 return true;
             }
@@ -531,10 +533,10 @@ public class UtMM {
             couleurs[i] = demande.charAt(i);
         }
 
-        while (!elemDiff(couleurs) || !demande.equals(demande.toUpperCase())){
-            if(!elemDiff(couleurs)) {
+        while (!elemDiff(couleurs) || !demande.equals(demande.toUpperCase())) {
+            if (!elemDiff(couleurs)) {
                 System.out.println("Il y a eu des doublons, veuillez les supprimer.");
-            }else{
+            } else {
                 System.out.println("Les lettres ne sont pas en majuscule.");
             }
             System.out.println("Veuillez rentrer les initiales des couleurs.");
