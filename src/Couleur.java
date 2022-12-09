@@ -6,10 +6,6 @@ public class Couleur {
         tabCouleurs = tab;
     }
 
-    public static char getCouleur(int i) {
-        return tabCouleurs[i];
-    }
-
     public static char[] getTabCouleurs() {
         return tabCouleurs;
     }

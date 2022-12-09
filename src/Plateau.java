@@ -15,9 +15,6 @@ public class Plateau {
         nbCoups = 0;
     }
 
-    public void setNbCoups(int nbCoups) {
-        this.nbCoups = nbCoups;
-    }
 
     public void setCod(int nbCoups, Code cod1) {
         this.cod[nbCoups] = cod1;
@@ -39,9 +36,6 @@ public class Plateau {
         return rep;
     }
 
-    public int getNbCoups() {
-        return nbCoups;
-    }
 
     public int[] getRep(int i) {
         return rep[i];
