@@ -8,7 +8,7 @@ public class MancheHumain {
 
     public int joue(int lgCode) {
         Code cod1 = UtMM.codeAleat(lgCode, Couleur.getTaille());
-        for (int i = 1; i <= Plateau.getNbEssaisMax(); i++) {
+        for (int i = 1; i < Plateau.getNbEssaisMax(); i++) {
             System.out.println("\n------------------------------\n");
             System.out.println("Vous pouvez choisir entre ses couleurs : " + Couleur.pourEcrire());
             p.setCod(i, UtMM.propositionCodeHumain(i, lgCode, Couleur.getTabCouleurs()));
