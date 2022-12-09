@@ -22,9 +22,9 @@ public class Partie {
 
                 System.out.println("C'est à votre tour d'être le codeur.");
                 System.out.println("\n------------------------------\n");
-                scoreJoueur += MH.joue(lgCode);
+                scoreOrdi += MH.joue(lgCode);
 
-                System.out.println("Votre score est : " + scoreJoueur);
+                System.out.println("Le score de l'IA est de : " + scoreOrdi);
                 System.out.println("\n------------------------------\n");
 
 
@@ -36,8 +36,8 @@ public class Partie {
                 int M_o = MO.joue(lgCode);
 
                 if (M_o != 0) {
-                    scoreOrdi += M_o;
-                    System.out.println("Le score de l'IA est : " + scoreOrdi);
+                    scoreJoueur += M_o;
+                    System.out.println("Votre score est de : " + scoreJoueur);
                     System.out.println("\n------------------------------\n");
                 } else {
                     System.out.println("Vous vous êtes trompé dans vos saisies. Passons à la manche suivante.");
@@ -52,8 +52,10 @@ public class Partie {
         System.out.println("C'est la fin de la partie. \nVotre score final est : " + scoreJoueur + ". \nLe score final de l'IA est : " + scoreOrdi + ".");
         System.out.println("\n------------------------------\n");
 
-        if (scoreJoueur < scoreOrdi) {
+        if (scoreJoueur > scoreOrdi) {
             System.out.println("Vous avez gagné la parti !!! \nMerci d'avoir joué avec nous.");
+        } else if (scoreJoueur==scoreOrdi) {
+            System.out.println("vous avez fait égalité!!! \nMerci d'avoir joué avec nous.");
         } else {
             System.out.println("Vous avez perdu la parti ... \nMerci d'avoir joué avec nous.");
         }

@@ -3,16 +3,7 @@ import java.util.*;
 public class UtMM {
 
 
-    public static int[] initTab(int nb, int val) {
 
-        int[] tab = new int[nb];
-        for (int i = 0; i < nb; i++) {
-            tab[i] = val;
-        }
-
-        return tab;
-
-    }
 
     //______________________________________________
 
@@ -31,24 +22,6 @@ public class UtMM {
 
     }
 
-    //______________________________________________
-
-    /**
-     * pré-requis : aucun
-     * résultat : la liste des éléments de t entre parenthèses et séparés par des virgules
-     */
-    public static String listElem(char[] t) {
-
-        String str = "";
-
-        str += "(" + t[0];
-
-        for (int i = 1; i < t.length; i++) {
-            str += "," + t[i];
-        }
-        str += ")";
-        return str;
-    }
 
     //______________________________________________
 
